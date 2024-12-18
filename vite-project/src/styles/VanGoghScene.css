@@ -2,8 +2,8 @@
 .scene-container {
     position: relative;
     width: 100%;
-    height: auto; /* Висота автоматично залежить від картинки */
-    overflow: hidden;
+    height: auto; 
+    /* overflow: hidden; */
     background-color: #001f3f;
   }
   
@@ -11,6 +11,7 @@
     width: 100%;
     display: block;
     z-index: 1; 
+    object-fit: inherit;
   }
   
   /* Падаючий сніг (Canvas) */
@@ -55,6 +56,3 @@
       opacity: 1;
     }
   }
-  
- 
-  

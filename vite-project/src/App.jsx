@@ -1,26 +1,33 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { gsap } from 'gsap';
-import IntroScene from './components/IntroScene';
-import VanGoghScene from './components/VanGoghScene';
-import MonetScene from './components/MonetScene';
+import React, { useState } from "react";
+import SceneTransition from "./components/SceneTransition";
+import IntroScene from "./components/IntroScene";
+import VanGoghScene from "./components/VanGoghScene";
+import MonetScene from "./components/MonetScene";
 
 const App = () => {
-  const handleSceneTransition = () => {
-    gsap.to('.scene', { opacity: 0, duration: 1, onComplete: () => window.scrollTo(0, 0) });
+  const [currentScene, setCurrentScene] = useState(0);
+
+  // Масив зі сценами
+  const scenes = [
+    <IntroScene key="intro" />,
+    <VanGoghScene key="vangogh" />,
+    <MonetScene key="monet" />,
+  ];
+
+  // Функція для переходу до наступної сцени
+  const handleSceneChange = () => {
+    setCurrentScene((prevScene) => (prevScene + 1) % scenes.length);
   };
 
   return (
-    <Router>
-      <div className="scene">
-        <Routes>
-          <Route path="/" element={<IntroScene />} />
-          <Route path="/van-gogh" element={<VanGoghScene onComplete={handleSceneTransition} />} />
-          <Route path="/monet" element={<MonetScene onComplete={handleSceneTransition} />} />
-        </Routes>
-      </div>
-    </Router>
+    <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
+      <SceneTransition onTransitionEnd={handleSceneChange}>
+        {scenes[currentScene]}
+      </SceneTransition>
+    </div>
   );
 };
 
 export default App;
+
+
